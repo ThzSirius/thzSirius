@@ -101,7 +101,7 @@ public class HttpRequest {
         return parameters;
     }
 
-    public void putParameters(String s,String o){
+    public void putParameter(String s,String o){
         parameters.put(s,o);
     }
 
