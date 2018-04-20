@@ -1,5 +1,8 @@
 package kernel.Server;
 
+import kernel.Http.HttpParser;
+import kernel.Http.HttpRequest;
+import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
@@ -13,7 +16,7 @@ import java.util.Iterator;
 
 public class HttpServer  extends Server{
 
-    private static final org.slf4j.Logger logger = LoggerFactory.getLogger(HttpServer.class);
+    private static final Logger logger = LoggerFactory.getLogger(HttpServer.class);
     private Selector selector;
 
     public HttpServer() throws Exception {
@@ -63,6 +66,8 @@ public class HttpServer  extends Server{
 
     private  void acceptKey(SelectionKey key) throws IOException {
          SocketChannel channel = (SocketChannel) key.channel();
+         HttpRequest request = HttpParser.createRequest(channel);
+        //todo
 
     }
 

@@ -74,7 +74,7 @@ public class HttpRequestBuilder implements RequestBuilder {
         if (request.getMethod().equals(RequestType.POST) || request.getMethod().equals(RequestType.DELETE) || request.getMethod().equals(RequestType.PUT)) {
             String contentType = request.getHeader(HttpHeaderType.CONTENT_TYPE);
             int contentLength = Integer.parseInt(request.getHeader(HttpHeaderType.CONTENT_LENGTH).trim());
-            handleRequestBody(contentType,contentLength);
+            handleRequestBody(contentType, contentLength);
         }
         return request;
     }
@@ -94,11 +94,11 @@ public class HttpRequestBuilder implements RequestBuilder {
         String bodyContext = httpReader.readLimitSize(contentLength);
         if (contentType.startsWith("application/x-www-form-urlencoded")) {
             String[] paramStringArr = bodyContext.split("&");
-            for(String paramString : paramStringArr){
+            for (String paramString : paramStringArr) {
                 String[] param = paramString.split("=");
-                request.setAttribute(param[0],param[1]);
+                request.setAttribute(param[0], param[1]);
             }
-        }else if(contentType.startsWith("text/plain")||contentType.startsWith("application/json")){
+        } else if (contentType.startsWith("text/plain") || contentType.startsWith("application/json")) {
             request.setRequestContext(bodyContext);
         }
 
