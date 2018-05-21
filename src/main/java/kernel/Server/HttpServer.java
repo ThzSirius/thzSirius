@@ -1,5 +1,6 @@
 package kernel.Server;
 
+import kernel.Factory.ExecutorFactory;
 import kernel.Http.HttpParser;
 import kernel.Http.HttpRequest;
 import org.slf4j.Logger;
@@ -65,10 +66,20 @@ public class HttpServer  extends Server{
 
 
     private  void acceptKey(SelectionKey key) throws IOException {
-         SocketChannel channel = (SocketChannel) key.channel();
-         HttpRequest request = HttpParser.createRequest(channel);
-        //todo
 
+      ServerSocketChannel server =(ServerSocketChannel) key.channel();
+      SocketChannel channel = server.accept();
+      channel.configureBlocking(false);
+      channel.register(selector,SelectionKey.OP_READ);
+
+    }
+
+    private void readKey(SelectionKey key) throws IOException{
+       SocketChannel channel = (SocketChannel)key.channel();
+       HttpRequest httpRequest = HttpParser.createRequest(channel);
+       if(httpRequest != null){
+           ExecutorFactory.getHandleExecutor().execute();
+       }
     }
 
 
